@@ -1,0 +1,47 @@
+-- 文章表
+CREATE TABLE article (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+    column_id BIGINT COMMENT '所属专栏id（逻辑外键）',
+    title VARCHAR(255) NOT NULL COMMENT '标题',
+    description VARCHAR(255) COMMENT '文章简介',
+    content LONGTEXT COMMENT '文章内容 markdown 文本',
+    cover_url VARCHAR(512) COMMENT '图片链接 存入 MinIO',
+    publish_status TINYINT NOT NULL DEFAULT 0 COMMENT '0草稿 1发布 2下架',
+    is_deleted TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1删除 0未删除',
+    release_time DATETIME DEFAULT NULL COMMENT '发布时间',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
+
+-- 专栏表
+CREATE TABLE blog_column (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+    name VARCHAR(100) NOT NULL UNIQUE COMMENT '专栏名',
+    description VARCHAR(255) COMMENT '专栏描述',
+    cover_url VARCHAR(512) COMMENT '专栏图片链接 存入 MinIO',
+    publish_status TINYINT NOT NULL DEFAULT 0 COMMENT '0草稿 1发布 2下架',
+    is_deleted TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1删除 0未删除',
+    release_time DATETIME DEFAULT NULL COMMENT '发布时间',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专栏表';
+
+-- 标签表
+CREATE TABLE tag (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+    name VARCHAR(100) NOT NULL UNIQUE COMMENT '标签名',
+    description VARCHAR(255) COMMENT '标签描述',
+    color VARCHAR(20) COMMENT '颜色，固定16进制 #RRGGBB',
+    active_status TINYINT(1) NOT NULL DEFAULT 1 COMMENT '1激活 0失活',
+    is_deleted TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1删除 0未删除',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标签表';
+
+-- 文章标签关联表
+CREATE TABLE article_tag (
+    article_id BIGINT NOT NULL COMMENT '文章ID',
+    tag_id BIGINT NOT NULL COMMENT '标签ID',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (article_id, tag_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章与标签关联表';
