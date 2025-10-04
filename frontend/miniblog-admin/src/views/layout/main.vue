@@ -13,5 +13,6 @@ export default {
 <style lang="less">
 .el-main {
   padding: 0 !important;
+  background-color: #FAFAFA;
 }
 </style>

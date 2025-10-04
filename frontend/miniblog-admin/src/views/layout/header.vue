@@ -26,6 +26,7 @@ export default {
 
 .logo {
   height: 100%;
+  width: 124px;
   text-align: left;
 
   h1 {
