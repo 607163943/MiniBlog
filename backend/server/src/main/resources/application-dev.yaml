@@ -1,0 +1,4 @@
+mysql:
+  database: miniblog
+  username: root
+  password: 123456

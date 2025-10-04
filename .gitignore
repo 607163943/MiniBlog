@@ -2,3 +2,6 @@
 /frontend/miniblog-admin/node_modules/
 /backend/.idea/
 /docs/开发杂项.md
+/backend/server/target/
+/backend/pojo/target/
+/backend/common/target/

@@ -5,10 +5,8 @@
     </el-form-item>
     <el-form-item label="状态" prop="status">
       <el-select v-model="searchForm.status" placeholder="状态" id="status">
-        <!-- TODO:状态数据从数据库中获取 -->
-        <el-option label="草稿" :value="0"></el-option>
-        <el-option label="发布" :value="1"></el-option>
-        <el-option label="下架" :value="2"></el-option>
+        <el-option v-for="item in publishStatusList" :key="item.value" :label="item.label"
+          :value="item.value"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
@@ -19,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -27,6 +26,9 @@ export default {
         status: ''
       }
     }
+  },
+  computed: {
+    ...mapState('system', ['publishStatusList'])
   },
   methods: {
     onSubmit () {
