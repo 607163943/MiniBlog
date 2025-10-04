@@ -50,6 +50,16 @@ CREATE TABLE article_tag (
     PRIMARY KEY (article_id, tag_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章与标签关联表';
 
+-- 数据字典表
+CREATE TABLE sys_dict (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+    code VARCHAR(50) NOT NULL UNIQUE COMMENT '字典编码',
+    name VARCHAR(100) NOT NULL COMMENT '字典名称',
+    items TEXT NOT NULL COMMENT '字典项，JSON字符串存储',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典表';
+
 -- ========================
 -- 初始化数据
 -- ========================
@@ -81,3 +91,27 @@ VALUES
 (1, 1), -- Java基础语法详解 -> Java
 (1, 3), -- Java基础语法详解 -> 数据库
 (2, 2); -- SpringBoot项目搭建指南 -> SpringBoot
+
+-- 插入数据字典
+-- 发布状态
+INSERT INTO sys_dict (code, name, items) VALUES
+(
+  'publish_status',
+  '发布状态',
+  '[
+     {"value":0, "label":"草稿"},
+     {"value":1, "label":"发布"},
+     {"value":2, "label":"下架"}
+   ]'
+);
+
+-- 激活状态
+INSERT INTO sys_dict (code, name, items) VALUES
+(
+  'active_status',
+  '激活状态',
+  '[
+     {"value":0, "label":"失活"},
+     {"value":1, "label":"激活"}
+   ]'
+);
