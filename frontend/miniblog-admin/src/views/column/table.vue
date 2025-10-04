@@ -1,7 +1,7 @@
 <template>
   <div class="column-table">
     <div class="button-group">
-      <el-button type="success">添加专栏</el-button>
+      <el-button type="success" @click="handleAdd">添加专栏</el-button>
       <el-button type="danger">批量删除</el-button>
     </div>
     <el-table :data="tableData" border stripe>
@@ -56,8 +56,19 @@ export default {
     }
   },
   methods: {
+    handleAdd () {
+      this.showDialog({
+        id: 0,
+        title: '新增专栏',
+        mode: 'add'
+      })
+    },
     handleEdit (row) {
-      this.setDialogFormVisible(true)
+      this.showDialog({
+        id: row.id,
+        title: '修改专栏',
+        mode: 'update'
+      })
     },
     handleDelete (row) {
       console.log(row)
@@ -65,7 +76,7 @@ export default {
     handleCurrentChange (currentChange) {
       console.log(currentChange)
     },
-    ...mapMutations('column', ['setDialogFormVisible'])
+    ...mapMutations('column', ['showDialog'])
   }
 }
 </script>
